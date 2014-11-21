@@ -1,12 +1,13 @@
-﻿namespace WebDAVClient.Model.Internal
+﻿using System.Xml.Serialization;
+
+namespace WebDAVClient.Model.Internal
 {
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "DAV:")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "DAV:", IsNullable = false, ElementName = "multistatus")]
+    [XmlType(AnonymousType = true, Namespace = "DAV:"),
+     XmlRoot(Namespace = "DAV:", IsNullable = false, ElementName = "multistatus")]
+    // ReSharper disable once InconsistentNaming
     public class PROPFINDResponse
     {
-        
-        [System.Xml.Serialization.XmlElementAttribute("response")]
+        [XmlElement("response")]
         public PROPFINDItem[] Response { get; set; }
     }
-
 }

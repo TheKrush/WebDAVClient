@@ -1,42 +1,42 @@
-﻿namespace WebDAVClient.Model.Internal
+﻿using System.Xml.Serialization;
+
+namespace WebDAVClient.Model.Internal
 {
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "DAV:")]
+    [XmlType(AnonymousType = true, Namespace = "DAV:")]
+    // ReSharper disable once InconsistentNaming
     public class multistatusResponsePropstatProp
     {
+        [XmlElement("getcontentlength")]
+        public LongProperty ContentLength { get; set; }
 
-        [System.Xml.Serialization.XmlElementAttribute("getcontentlength")]
-        public IntProperty ContentLength { get; set; }
-
-
-        [System.Xml.Serialization.XmlElementAttribute("creationdate")]
+        [XmlElement("creationdate")]
         public DateProperty CreationDate { get; set; }
 
-
-        [System.Xml.Serialization.XmlElementAttribute("displayname")]
+        [XmlElement("displayname")]
         public string DisplayName { get; set; }
 
-
-        [System.Xml.Serialization.XmlElementAttribute("getetag")]
+        [XmlElement("getetag")]
         public string Etag { get; set; }
 
-
-        [System.Xml.Serialization.XmlElementAttribute("getlastmodified")]
+        [XmlElement("getlastmodified")]
         public StringProperty LastModified { get; set; }
 
-
-        [System.Xml.Serialization.XmlElementAttribute("resourcetype")]
+        [XmlElement("resourcetype")]
         public multistatusResponsePropstatPropResourcetype ResourceType { get; set; }
 
-
-        [System.Xml.Serialization.XmlElementAttribute("ishidden")]
+        [XmlElement("ishidden")]
         public BooleanProperty IsHidden { get; set; }
 
-
-        [System.Xml.Serialization.XmlElementAttribute("iscollection")]
+        [XmlElement("iscollection")]
         public BooleanProperty IsCollection { get; set; }
 
-
-        [System.Xml.Serialization.XmlElementAttribute("getcontenttype")]
+        [XmlElement("getcontenttype")]
         public string ContentType { get; set; }
+
+        [XmlElement("quota-used-bytes")]
+        public LongProperty QuotaUsedBytes { get; set; }
+
+        [XmlElement("quota-available-bytes")]
+        public LongProperty QuotaAvailableBytes { get; set; }
     }
 }

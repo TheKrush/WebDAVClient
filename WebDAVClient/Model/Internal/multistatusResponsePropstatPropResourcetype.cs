@@ -1,8 +1,11 @@
-﻿namespace WebDAVClient.Model.Internal
+﻿using System.Xml.Serialization;
+
+namespace WebDAVClient.Model.Internal
 {
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "DAV:")]
+    [XmlType(AnonymousType = true, Namespace = "DAV:")]
+    // ReSharper disable once InconsistentNaming
     public class multistatusResponsePropstatPropResourcetype
     {
-        public object collection { get; set; }
+        public object Collection { get; set; }
     }
 }

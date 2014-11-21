@@ -1,33 +1,39 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
+using WebDAVClient;
+using WebDAVClient.Model;
 
 namespace TestWebDAVClient
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             // Basic authentication required
-            var c = new WebDAVClient.Client(new NetworkCredential { UserName = "USERNAME" , Password = "PASSWORD"});
-            c.Server = "https://webdav.4shared.com";
-            c.BasePath = "/";
+            Client c = new Client(new NetworkCredential {UserName = "USERNAME", Password = "PASSWORD"}) {Server = "https://webdav.4shared.com", BasePath = "/"};
 
-            var files = c.List("/").Result;
-            var folder = files.FirstOrDefault(f => f.Href.EndsWith("/Test/"));
-            var folderReloaded = c.Get(folder.Href).Result;
+            IEnumerable<Item> files = c.List("/").Result;
+            Item folder = files.FirstOrDefault(f => f.Href.EndsWith("/Test/"));
+            if (folder != null)
+            {
+                Item folderReloaded = c.Get(folder.Href).Result;
+            }
 
-            var folderFiles = c.List(folder.Href).Result;
-            var folderFile = folderFiles.FirstOrDefault(f => f.IsCollection == false);
+            IEnumerable<Item> folderFiles = c.List(folder.Href).Result;
+            Item folderFile = folderFiles.FirstOrDefault(f => f.IsCollection == false);
 
-            var x = c.Download(folderFile.Href).Result;
+            if (folderFile != null)
+            {
+                Stream x = c.Download(folderFile.Href).Result;
+            }
 
-            var tempName = Path.GetRandomFileName();
-            var fileUploaded = c.Upload(folder.Href, File.OpenRead(@"C:\Users\itay.TZUNAMI\Desktop\Untitled.png"), tempName).Result;
-            
+            string tempName = Path.GetRandomFileName();
+            bool fileUploaded = c.Upload(folder.Href, File.OpenRead(@"C:\Users\itay.TZUNAMI\Desktop\Untitled.png"), tempName).Result;
+
             tempName = Path.GetRandomFileName();
-            var folderCreated = c.CreateDir(folder.Href, tempName).Result;
-
+            bool folderCreated = c.CreateDir(folder.Href, tempName).Result;
         }
     }
 }
